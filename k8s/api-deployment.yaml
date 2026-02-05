@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: dforst98/employees_management:v4
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MONGODB_URL
+          value: "mongodb://mongo-0.mongo:27017"
+        - name: DATABASE_NAME
+          value: "employee_db"
+        - name: COLLECTION_NAME
+          value: "employee_db"

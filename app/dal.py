@@ -9,4 +9,12 @@ def get_engineering_high_salary_employees():
     employees = CNX.get_coll(COLLECTION_NAME)
     filtered_emp = employees.find({"job_role.department": "Engineering", "salary": {"$gt": 65000}},
                                   {'_id': 0, 'employee_id': 1, 'name': 1, 'salary': 1})
-    return filtered_emp
+    return list(filtered_emp)
+
+
+def get_employees_by_age_and_role():
+    employees = CNX.get_coll(COLLECTION_NAME)
+    filtered_emp = employees.find({"job_role.title": {"$in": ["Engineer", "Specialist"]}, "age": {"$gte": 30, "$lte": 45}},
+                                  {'_id': 0})
+    return list(filtered_emp)
+

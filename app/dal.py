@@ -1,3 +1,5 @@
+import pymongo
+
 from connection import MongoConnector
 import os
 
@@ -17,4 +19,13 @@ def get_employees_by_age_and_role():
     filtered_emp = employees.find({"job_role.title": {"$in": ["Engineer", "Specialist"]}, "age": {"$gte": 30, "$lte": 45}},
                                   {'_id': 0})
     return list(filtered_emp)
+
+
+def get_top_seniority_employees_excluding_hr():
+    employees = CNX.get_coll(COLLECTION_NAME)
+    filtered_emp = employees.find(
+        {"job_role.department": {"$not": {"$regex": "HR"}}},
+        {'_id': 0}).sort([("years_at_company", pymongo.DESCENDING)]).limit(7)
+    return list(filtered_emp)
+
 

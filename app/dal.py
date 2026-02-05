@@ -35,3 +35,11 @@ def get_employees_by_age_or_seniority():
     filtered_emp = employees.find({"$or": [{"years_at_company": {"$lt": 3}}, {"age": {"$gt": 50}}]},
                                   {'_id': 0, 'employee_id': 1, 'name': 1, 'age': 1, 'years_at_company': 1})
     return list(filtered_emp)
+
+
+def get_managers_excluding_departments():
+    employees = CNX.get_coll(COLLECTION_NAME)
+    filtered_emp = employees.find(
+        {"job_role.title": "Manager", "job_role.department": {"$not": {"$in": ["Sales", "Marketing"]}}},
+        {'_id': 0})
+    return list(filtered_emp)

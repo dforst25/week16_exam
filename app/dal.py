@@ -48,6 +48,6 @@ def get_managers_excluding_departments():
 def get_employees_by_lastname_and_age():
     employees = CNX.get_coll(COLLECTION_NAME)
     filtered_emp = employees.find(
-        {"name": {"$regex": '.* Nelson|.* Wright'}, "age": {"$lt": 45}},
+        {"name": {"$regex": '.* Nelson|.* Wright'}, "age": {"$lt": 35}},
         {'_id': 0, 'name': 1, 'age': 1, 'job_role.department': 1})
     return list(filtered_emp)
